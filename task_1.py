@@ -31,23 +31,17 @@ def read_file(file_name):
     
 def standart_write(file_name, lst):
     res = read_file(file_name)
+    res.append(lst)
     with open(file_name, 'w', encoding='utf-8', newline='') as data:
         f_w = DictWriter(data, fieldnames=['Имя', 'Фамилия', 'Телефон'])
         f_w.writeheader()
         f_w.writerows(res)
 
 def write_file(file_name, lst):
-    res = read_file(file_name)
     obj = {'Имя' :lst[0], 'Фамилия':lst[1], 'Телефон':lst[2]}
-    res.append(obj)
-    standart_write(file_name)
+    standart_write(file_name, obj)
 
-def new_write_file(new_file_name, lst):
-    res = read_file(new_file_name)
-    res.append(lst)
-    standart_write(new_file_name)
-
-def copy_row(file_name = file_name, new_file_name = new_file_name):
+def copy_row(file_name = file_name):
     with open(file_name, 'r', encoding='utf-8') as data:
         f_r = DictReader(data)
         lst_1 = []
@@ -62,7 +56,7 @@ def copy_row(file_name = file_name, new_file_name = new_file_name):
                 flag = True
         if not exists(new_file_name):
             create_file(new_file_name)
-        new_write_file(new_file_name, lst_1[number-1])
+        standart_write(new_file_name, lst_1[number-1])
 
 
 def main():
